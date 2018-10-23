@@ -1,0 +1,30 @@
+@charset 'utf-8';
+
+.form_box {
+	margin-top: 15px;
+	border-radius: 8px;
+	padding-left: 30px;
+	padding-bottom: 20px; 
+}
+
+.form_box .control-group {
+	margin-top: 20px;
+	font-size: 16px;
+	color: #cfcfcf;
+}
+
+#SystemModal {
+	background-color: #ccc;
+	border-radius: 8px;
+	overflow: hidden;
+}
+
+.user_box {
+	height: 80%;
+	overflow-x: hidden;
+	overflow-y: auto;
+}
+
+.glyphico_btn:hover {
+	cursor: pointer;
+}

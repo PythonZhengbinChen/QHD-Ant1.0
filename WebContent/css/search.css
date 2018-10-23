@@ -1,0 +1,72 @@
+@charset 'utf-8';
+
+
+#updateModal,#removeModal {
+	background-color: #ccc;
+	width: 30%;
+	height: 450px;
+	margin-top: 5%;
+	border-radius: 8px;
+}
+
+#updateModal label,#removeModal label{
+	float: left;
+	text-align: right;
+}
+
+.control {
+	float: right;
+	margin-left: 15px;
+}
+
+.control-group {
+	margin-top: 15px;
+	overflow: hidden;
+}
+
+.result {
+	min-height: 400px;
+	padding: 15px 0;
+}
+.title {
+	border-bottom: 2px solid #fff;
+	padding-bottom: 2px;
+	overflow: hidden;
+}
+.title .label{
+	font-size: 14px;
+	background-color: #fff;
+	color: #FF7300;
+}
+
+.sort span {
+	font-size: 14px;
+	color: #fff;
+}
+
+.member_info{
+	margin-top: 30px;
+}
+
+.member_info table td label:hover{
+	cursor: pointer;
+}
+
+.export button{
+	margin-top: 15px;
+	margin-right: 15px;
+}
+
+.glyphicon_hover:hover {
+	cursor: pointer;
+}
+#tab_div {
+			padding: 5px;
+			max-width: 330px;
+			line-height: 18px;
+			background-color: #fff;
+			border: 1px solid #7dbb47;
+			border-radius: 5px;
+			display: none;
+			z-index: 10000;
+		}

@@ -1,0 +1,608 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="csrf-token" content="adXiG5Qo4yrddNsRNK5yRkX8aDBCWjd781w8icK2"/>
+    <link rel="shortcut icon" href="../images/favicon.png" type="image/png">
+
+    <title>秦皇岛小蚂蚁亲子俱乐部</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/member_info.css" rel="stylesheet">
+	<link href="../css/jPages.css" rel="stylesheet">
+  	<link href="../css/animate.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a href="index.html" class="navbar-brand logo"><h3><span id="logo_title">秦皇岛</span> 小蚂蚁亲子俱乐部</h3></a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li style="margin-top: 15px;">欢迎: <span id="admin-name" style="color: #337ab7;">admin</span></li>
+				<li class="nav-divider"></li>
+				<li><a href="/QHD-Ant/loginOut.do"><span class="glyphicon glyphicon-remove"></span> 退出</a></li>
+			</ul>	
+		</div>
+	</div>
+</nav>
+
+<div class="container">
+	<div class="container main ">
+		<div class="form-inline sort pull-left">
+			<span>按照：</span>
+			<select id="way" name="way" class="form-control input-sm">
+				<option value="0">年龄</option>
+				<option value="1">生日</option>
+				<option value="2">次数</option>
+			</select>
+			<select id="order" name="order" class="form-control input-sm">
+				<option value="0">升序</option>
+				<option value="1">降序</option>
+			</select>
+			<button id="order_btn" type="button" class="btn btn-info btn-sm">排列</button>
+		</div>
+		<div class="form-inline add pull-right">
+			<div class="btn btn-info" id="backups" >备份数据库</div>
+			<a href="#import" role="button" class="btn btn-success"  data-toggle="modal">导入</a>
+			<a href="#MyModal" role="button" class="btn btn-primary" data-toggle="modal">添加</a>
+		</div>
+	</div>
+
+	<div class="container member_info">
+		<table class="table table-hover">
+			<thead>
+				<tr>
+					<th>序号</th>
+					<th>姓名</th>
+					<th>性别</th>
+					<th>电话</th>
+					<th>身份证号</th>
+					<th>上车地点</th>
+					<th>参与次数</th>
+					<th>修改</th>
+					<th>删除</th>
+				</tr>
+			</thead>
+			<tbody id="main_list">
+			<!-- 
+				<tr>
+					<td>1</td>
+					<td>陈正斌</td>
+					<td>男</td>
+					<td>15603317662</td>
+					<td>352230199507131838</td>
+					<td>燕山大学</td>
+					<td><span class="label label-default">318化石谷</span></td>
+				</tr>
+				 -->
+			</tbody>
+		</table>
+		<div class="holder"></div>
+	</div>
+	
+	
+
+
+
+	<div class="signup-footer">
+        <div class="pull-left">
+                &copy; Copyright © 2017, QHD-Ant All Rights Reserved.
+        </div>
+        <div class="pull-right">
+            <div class="qqlink link" style="color: #fff">QQ群：518078707 | 微信公众号：QHD-Ant</div>
+        </div>
+    </div>	
+</div>
+
+<div id="MyModal" class="modal fade container" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h3 id="MyModalLabel"><label  class="glyphicon glyphicon-user"></label> 会员信息填写</h3>
+	</div>
+	<div class="modal-body" style="overflow: hidden;">
+		<form id="setMember_form" class="form-horizontal" method = "get" action="/QHD-Ant/setMemberInfo.do">
+			<div class="control-group form-inline has-feedback" >
+				<label class="control-label" for="name">姓&nbsp;&nbsp;名: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="name" id="name" placeholder="姓名">
+				</div>
+			</div>
+			<div class="control-group  form-inline has-feedback">
+				<label class="control-label" for="sex">性&nbsp;&nbsp;别: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="sex" id="sex" placeholder="性别">
+				</div>
+			</div>
+			<div class="control-group  form-inline has-feedback">
+				<label class="control-label" for="phone">电&nbsp;&nbsp;话: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="phone" id="phone" placeholder="电话">
+				</div>
+			</div>
+			<div class="control-group form-inline has-feedback">
+				<label class="control-label" for="identity">身份证号: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="identity" id="identity" placeholder="身份证号">
+				</div>
+			</div>
+			<div class="control-group form-inline has-feedback">
+				<label class="control-label" for="site">上车地点: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="site" id="site" placeholder="上车地点">
+				</div>
+			</div>
+			<div class="control-group form-inline has-feedback">
+				<label class="control-label" for="activitys">已参加活动: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="activitys" id="activitys" placeholder="已参加活动">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn btn-danger" class="close" data-dismiss="modal" aria-hidden="true">关闭</a>
+		<a href="#" id="set_btn" class="btn btn-primary">保存</a>
+	</div>
+</div>
+
+<div id="import" class="modal fade container" tabindex="-1" role="dialog" aria-labelledby="MyImport" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h3 id="MyImport"><label  class="glyphicon glyphicon-user"></label> 会员信息导入</h3>
+	</div>
+	<div class="modal-body" style="overflow: hidden;">
+		<form id="member_file" method="post" enctype="multipart/form-data" action="/QHD-Ant/uploadMemberFile.do">
+			<div class="input_box">
+				<label><span class="glyphicon glyphicon-files"></span>会员信息文件:</label>
+				<input type="file" name="member_file" id="local_fileInput" class="form-control" multiple placeholder="选择本地文件">
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn btn-danger" class="close" data-dismiss="modal" aria-hidden="true">关闭</a>
+		<a id = "upload" href="#" class="btn btn-primary">上传</a>
+	</div>
+</div>
+
+
+<div id="updateModal" class="modal fade container" tabindex="-1" role="dialog" aria-labelledby="updateModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h3 id="updateModalLabel"><label  class="glyphicon glyphicon-user"></label> 会员信息修改</h3>
+	</div>
+	<div class="modal-body" style="overflow: hidden;">
+		<form id ="updateMember_form" class="form-horizontal"  method="get" action="/QHD-Ant/updateMemberInfo.do">
+			<div class="control-group form-inline has-feedback" >
+				<label class="control-label" for="name">姓&nbsp;&nbsp;名: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="name" id="name_update" placeholder="姓名">
+				</div>
+			</div>
+			<div class="control-group  form-inline has-feedback">
+				<label class="control-label" for="sex">性&nbsp;&nbsp;别: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="sex" id="sex_update" placeholder="性别">
+				</div>
+			</div>
+			<div class="control-group  form-inline has-feedback">
+				<label class="control-label" for="phone">电&nbsp;&nbsp;话: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="phone" id="phone_update" placeholder="电话">
+				</div>
+			</div>
+			<div class="control-group form-inline has-feedback">
+				<label class="control-label" for="identity">身份证号: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="identity" id="identity_update" placeholder="身份证号">
+					<input type="hidden" name="identity_old" id="identity_update_old">
+				</div>
+			</div>
+			<div class="control-group form-inline has-feedback">
+				<label class="control-label" for="site">上车地点: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="site" id="site_update" placeholder="上车地点">
+				</div>
+			</div>
+			<div class="control-group form-inline has-feedback" onmouseout="hideTab(event)" onmouseover="showTab(event,this)">
+				<label class="control-label" for="activitys">已参加活动: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" id="activitys_update" disabled="true" placeholder="已参加活动">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn btn-danger" class="close" data-dismiss="modal" aria-hidden="true">关闭</a>
+		<a href="#" id="update_btn" class="btn btn-primary">更新</a>
+	</div>
+</div>
+
+
+<div id="updateFile" class="modal fade container" style="height: 150px;margin-top: 15%" tabindex="-1" role="dialog" aria-labelledby="fileModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h3 id="fileModalLabel"><label  class="glyphicon glyphicon-question-sign"></label> 系统提示</h3>
+	</div>
+	<div class="modal-body" style="overflow: hidden; text-align: center; padding: 30px;">
+		<h3 style="color: #fff;">数据上传中，请稍后...</h3>
+	</div>
+</div>
+
+<div id=backupsModal class="modal fade container" style="height: 150px;margin-top: 15%" tabindex="-1" role="dialog" aria-labelledby="backupsModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h3 id="backupsModalLabel"><label  class="glyphicon glyphicon-question-sign"></label> 系统提示</h3>
+	</div>
+	<div class="modal-body" style="overflow: hidden; text-align: center; padding: 30px;">
+		<h3 style="color: #fff;">数据库备份中，请稍后...</h3>
+	</div>
+</div>
+
+<div id=removeModal class="modal fade container" style="height: 220px;margin-top: 15%" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h3 id="removeModalLabel"><label  class="glyphicon glyphicon-question-sign"></label> 系统提示</h3>
+	</div>
+	<div class="modal-body" style="overflow: hidden; text-align: center; padding: 30px;">
+		<h3 style="color: #fff;">是否删除会员:<span id="memberInfo" identity="" style="color:red;"></span>的信息？</h3>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn btn-danger" class="close" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a href="#" id="remove_btn" onclick="removeMemberInfo()" class="btn btn-primary">确认</a>
+	</div>
+</div>
+
+<div id="tab_div">
+</div>
+
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jPages.min.js"></script>
+<script src="../js/jpage-main.js"></script>
+<script type="text/javascript">
+	function getAdmin() {
+		$.ajax({
+			url: "/QHD-Ant/getAdmin.do",
+			async: false,
+			type: "GET",
+			success: function(data) {
+				$("#admin-name").html(data.name);
+				if(data.role == 1) {
+					$(".add").hide();
+					$(".glyphicon-eye-open").parent().hide();
+					$(".glyphicon-remove").parent().hide();
+					$(".member_info thead tr th:last").hide();
+					$(".member_info thead tr th:last").prev().hide();
+				}
+			}
+		});
+	}
+
+	function fileUpload() {
+		$("#upload").click(function() {
+			if($("#local_fileInput").val() == undefined || $("#local_fileInput").val() == "") {
+				alert("请选择本地文件！");
+				return;
+			}
+			$("#member_file").submit();
+			$("#import").modal("hide");
+			$("#updateFile").modal("show");
+		});
+	}
+	
+	function getMemberList() {
+		$.ajax({
+			url: "/QHD-Ant/getMemberList.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			success: function(data) {
+				for(var i=0;i<data.length;i++){
+					var activityCount = data[i].join_activity;
+					
+					var str = "<tr><td>"+(i+1)+"</td><td>"+data[i].name+"</td><td>"+data[i].sex+"</td><td>"+data[i].phone+"</td><td>"+data[i].identity+"</td><td>"+data[i].site+"</td><td>"+
+					activityCount+"</td><td><a href=\"#updateModal\" role=\"button\" data-toggle=\"modal\"  onclick=\"clickMember(this)\" class=\"glyphicon glyphicon-eye-open\"></a></td>"+
+					"<td><a href=\"#removeModal\" role=\"button\" data-toggle=\"modal\"  onclick=\"removeMember(this)\" class=\"glyphicon glyphicon-remove\"></a></td>"+"</tr>";
+					$(".member_info table tbody").append(str);
+					str = "";
+				}
+			}
+		});
+		jpage_main();
+	}
+	
+	function setAndUpdateMember() {
+		$("#set_btn").click(function() {
+			var name = $("#name").val();
+			var sex = $("#sex").val();
+			var phone = $("#phone").val();
+			var identity = $("#identity").val();
+			var site = $("#site").val();
+			
+			if(name == "") {
+				$("#name").prev().removeClass("glyphicon-ok");
+				$("#name").prev().addClass("glyphicon-remove");
+				alert("姓名不能为空！");
+				return;
+			}else {
+				$("#name").prev().removeClass("glyphicon-remove");
+				$("#name").prev().addClass("glyphicon-ok");
+			}
+			if(phone == "" || phone.length != 11) {
+				$("#phone").prev().removeClass("glyphicon-ok");
+				$("#phone").prev().addClass("glyphicon-remove");
+				alert("电话号码输入有误！");
+				return;
+			}else {
+				$("#phone").prev().removeClass("glyphicon-remove");
+				$("#phone").prev().addClass("glyphicon-ok");
+			}
+			if(identity == "" || identity.length != 18) {
+				$("#identity").prev().removeClass("glyphicon-ok");
+				$("#identity").prev().addClass("glyphicon-remove");
+				alert("身份证号输入有误！");
+				return;
+			}else {
+				var month = identity.substring(10, 14);
+				$("#identity").prev().removeClass("glyphicon-remove");
+				$("#identity").prev().addClass("glyphicon-ok");
+			}
+			
+			$.ajax({
+				url: "/QHD-Ant/isMember.do",
+				async: false,
+				type: "get",
+				data: {
+					identity: identity
+				},
+				dataType: "json",
+				success: function(data) {
+					if(data) {
+						alert("会员"+identity+"已经添加，不可重复添加！");
+						return ;
+					} else {
+						$("#setMember_form").submit();
+					}
+				}
+			});
+			
+		});
+		
+		$("#update_btn").click(function() {
+			var name = $("#name_update").val();
+			var sex = $("#sex_update").val();
+			var phone = $("#phone_update").val();
+			var identity = $("#identity_update").val();
+			var site = $("#site_update").val();
+			
+			if(name == "") {
+				$("#name_update").prev().removeClass("glyphicon-ok");
+				$("#name_update").prev().addClass("glyphicon-remove");
+				alert("姓名不能为空！");
+				return;
+			}else {
+				$("#name_update").prev().removeClass("glyphicon-remove");
+				$("#name_update").prev().addClass("glyphicon-ok");
+			}
+			if(phone == "" || phone.length != 11) {
+				$("#phone_update").prev().removeClass("glyphicon-ok");
+				$("#phone_update").prev().addClass("glyphicon-remove");
+				alert("电话号码输入有误！");
+				return;
+			}else {
+				$("#phone_update").prev().removeClass("glyphicon-remove");
+				$("#phone_update").prev().addClass("glyphicon-ok");
+			}
+			if(identity == "" || identity.length != 18) {
+				$("#identity_update").prev().removeClass("glyphicon-ok");
+				$("#identity_update").prev().addClass("glyphicon-remove");
+				alert("身份证号输入有误！");
+				return;
+			}else {
+				var month = identity.substring(10, 14);
+				$("#identity_update").prev().removeClass("glyphicon-remove");
+				$("#identity_update").prev().addClass("glyphicon-ok");
+			}
+			
+			
+			$.ajax({
+				url: "/QHD-Ant/isMember.do",
+				async: false,
+				type: "get",
+				data: {
+					identity: identity
+				},
+				dataType: "json",
+				success: function(data) {
+					if(data) {
+						alert("会员"+identity+"已经存在，不可重复！");
+						return ;
+					} else {
+						$("#updateMember_form").submit();
+					}
+				}
+			});
+			
+		});
+	}
+	
+	function clickMember(event) {
+		var root = $(event).parent().parent();
+		var name = $(root).children().eq(1).html();
+		var sex = $(root).children().eq(2).html();
+		var phone = $(root).children().eq(3).html();
+		var identity = $(root).children().eq(4).html();
+		var site = $(root).children().eq(5).html();
+		
+		$("#name_update").val(name);
+		$("#sex_update").val(sex);
+		$("#phone_update").val(phone);
+		$("#identity_update").val(identity);
+		$("#identity_update_old").val(identity);
+		$("#site_update").val(site);
+		
+		/*获取参加的活动信息*/
+		$.ajax({
+				url: "/QHD-Ant/getActivitysByIdentity.do",
+				async: false,
+				type: "get",
+				data: {
+					identity: identity
+				},
+				dataType: "html/text",
+				success: function(data) {
+					$("#activitys_update").val(data);
+				},
+				error: function(e) {
+					$("#activitys_update").val(e.responseText);
+					console.log(e.responseText);
+				}
+			});
+	}
+	
+	function removeMember(event) {
+		var root = $(event).parent().parent();
+		var name = $(root).children().eq(1).html();
+		var sex = $(root).children().eq(2).html();
+		var phone = $(root).children().eq(3).html();
+		var identity = $(root).children().eq(4).html();
+		var site = $(root).children().eq(5).html();
+		
+		$("#memberInfo").html(name);
+		$("#memberInfo").attr("idnetity",identity);
+	}
+	function removeMemberInfo() {
+		var identity = $("#memberInfo").attr("idnetity");
+		
+		$.ajax({
+			url: "/QHD-Ant/removeMemberInfo.do",
+			async: false,
+			type: "get",
+			data: {
+				identity: identity
+			},
+			dataType: "json",
+			success: function(data) {
+				if(!data) {
+					alert("删除失败！");
+				}
+				//getMemberList();     //使用这个好像存在缓存，数据已经删除信息，页面还保留
+				window.location.href = "member_import.html";
+				$("#removeModal").modal("hide");
+			}
+		});
+	}
+	
+	
+	function orderBy() {
+		$("#order_btn").click(function() {
+			var way = $("#way").val();
+			var order = $("#order").val();
+			$.ajax({
+				url: "/QHD-Ant/memberListOrderBy.do",
+				async: false,
+				type: "get",
+				data: {
+					way: way,
+					order: order
+				},
+				dataType: "json",
+				success: function(data) {
+					$(".member_info table tbody").html("");
+					for(var i=0;i<data.length;i++){
+						var activityCount = data[i].join_activity;
+						var str = "<tr><td>"+(i+1)+"</td><td>"+data[i].name+"</td><td>"+data[i].sex+"</td><td>"+data[i].phone+"</td><td>"+data[i].identity+"</td><td>"+data[i].site+"</td><td>"+
+						activityCount+"</td><td><a href=\"#updateModal\" role=\"button\" data-toggle=\"modal\"  onclick=\"clickMember(this)\" class=\"glyphicon glyphicon-eye-open\"></a></td>"+
+						"<td><a href=\"#removeModal\" role=\"button\" data-toggle=\"modal\"  onclick=\"removeMember(this)\" class=\"glyphicon glyphicon-remove\"></a></td>"+"</tr>";
+						$(".member_info table tbody").append(str);
+						str = "";
+						}
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+		jpage_main();
+		});
+	}
+	
+	function backupsDatabase() {
+		$("#backups").click(function() {
+			$("#backupsModal").modal("show");
+			$.ajax({
+				url: "/QHD-Ant/backupsDatabase.do",
+				async: false,
+				type: "GET",
+				success: function(data) {
+					if(data) {
+						alert("数据库备份成功！");
+						$("#backupsModal").modal("hide");
+					}
+				}
+			});
+		});
+	}
+</script>
+
+<script type="text/javascript">
+	function showTab(e,_this) {
+		var info = $(_this).children().children("input").val();
+		var e = e||window.event;
+		var pointX = e.clientX+document.body.scrollLeft + document.documentElement.scrollLeft;
+		var pointY = e.clientY+document.body.scrollTop + document.documentElement.scrollTop;
+		$("#tab_div").html(info);
+		$("#tab_div").css({"position":"absolute","left": pointX,"top":pointY});
+		if(info != "") {
+			$("#tab_div").show();
+		}
+	}
+	
+	function hideTab(e) {
+		$("#tab_div").hide();
+	}
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		getMemberList();
+		getAdmin();
+		fileUpload();
+		setAndUpdateMember();
+		orderBy();
+		backupsDatabase();
+	});
+</script>
+</body>
+</html>

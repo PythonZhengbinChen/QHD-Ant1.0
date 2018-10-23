@@ -1,0 +1,150 @@
+@charset 'utf-8';
+
+body {
+   background: #FF7300;
+   font-family: 'LatoRegular', 'Lucida Grande', 'Lucida Sans Unicode', Helvetica, sans-serif !important;
+   line-height: 21px;
+   color: #636e7b;
+}
+body.notfound,
+body.signin {
+   background: #e4e7ea;
+}
+h3 {
+	margin: 0 0 ;
+	padding:  0 0;
+}
+.container{
+	margin: 0px auto;
+}
+
+.navbar-fixed-top {
+	padding: 5px 0;
+}
+.logo h3{
+	color: #FF7300;
+}
+
+#logo_title {
+	padding: 2px;
+	background: #FF7300;
+	color: #fff;
+	border-radius: 8px;
+}
+
+.main {
+	margin-top: 80px;
+}
+
+#navbar-collapse ul li a {
+	padding: 6px;
+	margin-top:9px;
+	margin-left: 5px;
+}
+#navbar-collapse ul li a:hover {
+	background: red;
+	color: #fff;
+	border-radius: 8px;
+} 
+
+.nav-left {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	background-color: #fff;
+	box-shadow:2px 5px 3px #ccc;
+}
+
+.main-right {
+	border: 1px solid #ccc;
+	border-radius: 10px;
+	padding: 10px;
+	box-shadow:2px 2px 3px #ccc;
+}
+
+.label-lg {
+	font-size: 16px;
+}
+.breadcrumb {
+	background-color: #fff;
+	box-shadow:2px 2px 3px #ccc;
+}
+
+table {
+	font-size: 14px;
+	background-color: #fff;
+	border-radius: 10px; 
+	box-shadow:2px 2px 3px #ccc;
+	text-align: center;
+}
+thead th{
+	color: #4582ec;
+	text-align: center;
+}
+.ui-widget-header{
+  			background-color: #4582ec;
+  			opacity: 0.8; 
+  			color: #fff;
+}
+
+.well{
+	background-color: #4582ec; 
+	opacity: 0.8; 
+	color: #fff;
+	box-shadow:2px 2px 3px #ccc;
+}
+
+.block{
+  	float: left;
+  	background: #FFF; 
+  	text-align: center;
+  	padding: 10px 0 0 0;
+  	color: #FF7300;
+}
+.contain-div{
+  	margin-left: 4%;
+  	margin-top: 4%;
+  	width: 20%; 
+  	height: 130px;
+  	overflow: hidden;
+  	float: left;
+  	box-shadow:2px 2px 3px #ccc;
+	background-color: #fff;
+}
+.block span {
+	font-size: 200%;
+	font-weight: bold;
+}
+.label_te{
+	width: 100%;
+	height: 100%;
+	font-size: 50px; 
+	color: #fff; 
+	padding: 45px 40%;
+	cursor: pointer;
+}
+
+.contain-div{
+	border-radius: 8px;
+}
+.contain-div label:hover {
+	color: red;
+	cursor: pointer;
+}
+.holder {
+	padding: 3px 0;
+	background: #fff;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.signup-footer {
+	padding: 15px 0;
+	margin-top: 10px;
+	border-top:1px dashed #ccc;
+	color: #fff;
+}
+
+.block:hover {
+	cursor: pointer;
+	opacity: 0.6;
+}

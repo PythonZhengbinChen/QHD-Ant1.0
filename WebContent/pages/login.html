@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="csrf-token" content="adXiG5Qo4yrddNsRNK5yRkX8aDBCWjd781w8icK2"/>
+    <link rel="shortcut icon" href="../images/favicon.png" type="image/png">
+
+    <title>秦皇岛小蚂蚁亲子俱乐部</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/style.default.css" rel="stylesheet">
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="../js/html5shiv.js"></script>
+    <script src="../js/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="signin">
+
+<!-- Preloader -->
+<div id="preloader">
+    <div id="status"><i class="fa fa-spinner fa-spin"></i></div>
+</div>
+
+<section>
+
+    <div class="signinpanel">
+
+        <div class="row" style="min-height: 400px">
+
+        <div class="col-md-7">
+
+            <div class="signin-info">
+                <div class="logopanel">
+                    <h1  style="color: #fff;"><span>[</span> 秦皇岛小蚂蚁亲子俱乐部 <span>]</span></h1>
+                </div><!-- logopanel -->
+
+                <div class="mb20"></div>
+
+                <h5><strong style="color: #fcfcfc;">秦皇岛小蚂蚁亲子俱乐部会员管理后台</strong></h5>
+
+                <div class="mb20"></div>
+<!--                <strong>Not a member? <a href="signup.html">Sign Up</a></strong>-->
+            </div><!-- signin0-info -->
+
+        </div><!-- col-sm-7 -->
+
+        <div class="col-md-5">
+            <form method="post" >
+                <h4 class="nomargin"  style="color: #fff;">登陆</h4>
+                <div class="mb20"></div>
+                <input type="text" name="name" id="name" class="form-control uname" placeholder="账号"/>
+                <div class="mb20"></div>
+                <input type="password" name="password" id="password" class="form-control pword" placeholder="密码"/>
+                <button type="button" onclick="login()" class="btn btn-success btn-block" >登陆</button>
+            </form>
+        </div><!-- col-sm-5 -->
+
+    </div><!-- row -->
+
+        <div class="signup-footer">
+
+            <div class="pull-left" style="color: #fff;">
+                &copy; Copyright © 2017, QHD-Ant All Rights Reserved.
+            </div>
+            <div class="pull-right">
+                <div class="qqlink link" style="color: #fff">QQ群：518078707 | 微信公众号：QHD-Ant</div>
+                
+            </div>
+        </div>
+
+    </div><!-- signin -->
+
+</section>
+
+
+<script src="../js/jquery-1.10.2.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+
+<script src="../js/custom.js"></script>
+
+<script type="text/javascript">
+	function login() {
+		var name = $("#name").val();
+		var password = $("#password").val();
+		if(name == "") {
+			alert("账号不能为空！");
+			return;
+		} else if (password == "") {
+			alert("密码不能为空！");
+			return;
+		}
+		
+		$.ajax({
+				url: "/QHD-Ant/login.do",
+				async: false,
+				type: "post",
+				data: {
+					"name": name,
+					"password": password
+				},
+				contentType: "application/x-www-form-urlencoded; charset=utf-8",
+				success: function(data) {
+					if(data) {
+						window.location.href = "index.html";
+					} else {
+						alert("账号或密码错误！");
+						return;
+					}
+				}
+			});
+	}
+	
+	function keyDownSearch(e) {  
+        // 兼容FF和IE和Opera  
+        var theEvent = e || window.event;  
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;  
+        if (code == 13) {   
+            login();//具体处理函数  
+            return false;  
+        }  
+        return true;  
+    }
+
+	document.getElementById('password').onkeydown=keyDownSearch;
+</script>
+
+</body>
+</html>

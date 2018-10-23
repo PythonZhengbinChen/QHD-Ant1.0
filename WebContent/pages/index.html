@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="csrf-token" content="adXiG5Qo4yrddNsRNK5yRkX8aDBCWjd781w8icK2"/>
+    <link rel="shortcut icon" href="../images/favicon.png" type="image/png">
+
+   <title>秦皇岛小蚂蚁亲子俱乐部</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <style>
+  		#removeModal{
+			background-color: #ccc;
+			width: 50%;
+			height: 450px;
+			margin-top: 5%;
+			border-radius: 8px;
+		}
+		
+		#removeModal label{
+			float: left;
+			text-align: right;
+		}
+  	</style>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a href="index.html" class="navbar-brand logo"><h3><span id="logo_title">秦皇岛</span> 小蚂蚁亲子俱乐部</h3></a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li style="margin-top: 15px;">欢迎: <span id="admin-name" style="color: #337ab7;">admin</span></li>
+				<li class="nav-divider"></li>
+				<li><a href="/QHD-Ant/loginOut.do"><span class="glyphicon glyphicon-remove"></span> 退出</a></li>
+			</ul>	
+		</div>
+	</div>
+</nav>
+
+<div class="container main">
+	<div class="search_box " style="overflow: hidden;">
+		<form id="search_form" class="serch form-group form-inline pull-left" action = "/QHD-Ant/searchMember.do" method="get" style="margin: 5px auto">
+			<!-- <select id="option" name = "option" class="select_box form-control">
+				<option value="">查询条件</option>
+				<option value="0">姓名</option>
+				<option value="1">电话</option>
+				<option value="2">活动主题</option>
+			</select> -->
+			<input type="text" class="form-control " id ="search_main" name="search_main" placeholder="请输入查询内容">
+			<button id="seach_btn" type="button" class="btn btn-info">search</button>
+		</form>
+
+		<div class="import pull-right" style="margin: 5px auto">
+			<a href="member_import.html"><button type="button" class="btn btn-info">会员信息列表</button></a>
+		</div>
+	</div>
+
+
+	<div class="container activity" style="margin-top: 20px; border-top: 2px solid #fff;">
+		<div class="navbar" style="margin-top: 15px;">
+			<nav class=" pull-left" style="margin: 5px auto; color: #fff">
+				<h3>小蚂蚁活动</h3>
+			</nav>
+			<nav class="pull-right">
+				<a href="view_activitys.html" style="color: #fff;">查看更多...</a>
+			</nav>
+		</div>
+		<div id="activity_div" class="container" style="margin-top: -30px; padding-bottom: 30px;">
+				<div class="contain-div">
+					
+	        		<div class="block" style="width: 100%;height: 90%;">
+			        	<a href="create_activitys.html" style="width: 100%;height: 100%;">
+			        		<h4>新活动</h4><br/>
+			        		<span>创建</span>
+			        	</a>
+		        	</div>
+		        	<!-- 
+		        	<div style="width: 100%;height: 100%; flaot: left;background-color: #999; opaticy: 0.5;" hidden onmouseout="$(this).slideUp();$(this).prev().slideDown();">
+		        		<a href="create_activitys.html" style="width: 100%;height: 100%;">
+		        		<label class="label_te glyphicon glyphicon-plus" ></label>
+		        		</a>
+		        	</div>
+		        	 -->
+	        	</div>
+	        	
+		</div>
+	</div>
+
+
+	<div class="signup-footer">
+        <div class="pull-left">
+                &copy; Copyright © 2017, QHD-Ant All Rights Reserved.
+        </div>
+        <div class="pull-right">
+            <div class="qqlink link" style="color: #fff">QQ群：518078707 | 微信公众号：QHD-Ant</div>
+        </div>
+    </div>
+</div>
+
+
+<div id=removeModal class="modal fade container" style="height: 220px;margin-top: 15%" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h3 id="removeModalLabel"><label  class="glyphicon glyphicon-question-sign"></label> 系统提示</h3>
+	</div>
+	<div class="modal-body" style="overflow: hidden; text-align: center; padding: 30px;">
+		<h3 style="color: #fff;">是否删除主题为:<span id="memberInfo" identity="" style="color:red;"></span>的活动？</h3>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn btn-danger" class="close" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a href="#" id="remove_btn" onclick="deleteActivity()" class="btn btn-primary">确认</a>
+	</div>
+</div>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script type="text/javascript">
+	function searchClick() {
+		$("#seach_btn").click(function() {
+			var search_main = $("#search_main").val();
+			if(search_main == "") {
+				alert("请输入查询得内容！");
+				return;
+			}
+			$("#search_form").submit();
+		});
+	}
+	
+	function getPartActivityList() {
+		$.ajax({
+			url: "/QHD-Ant/getPartActivityList.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			success: function(data) {
+				for(var i=0;i<data.length;i++) {
+					var str = "<div class=\"contain-div\"><label id=\"activity_delete\" onclick= \"removeMember(this)\" class=\" glyphicon glyphicon-remove pull-right\" style=\"font-size: 20px;\"></label><div value=\""+data[i].theme+"\" onclick=\"gotoEditActivity(this)\" class=\"block\" style=\"width: 100%;height: 100%;\">"+
+					"<h4>"+data[i].theme+" | "+data[i].time+"</h4><span>查看</span></div></div>";
+					$("#activity_div").append(str);
+					str = "";
+				}
+			}
+		});
+	}
+	
+	function gotoEditActivity(event) {
+		var theme = $(event).attr("value");
+		$.ajax({
+			url: "/QHD-Ant/gotoEditActivity.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			data: {
+				theme: theme
+			},
+			success: function(data) {
+				if(data) {
+					window.location.href = "edit_activitys.html";
+				}
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
+	
+	function getAdmin() {
+		$.ajax({
+			url: "/QHD-Ant/getAdmin.do",
+			async: false,
+			type: "GET",
+			success: function(data) {
+				$("#admin-name").html(data.name);
+				if(data.role == 1) {
+					$(".contain-div").eq(0).hide();
+				}
+			}
+		});
+	}
+	
+	function keyDownSearch(e) {  
+        // 兼容FF和IE和Opera  
+        var theEvent = e || window.event;  
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;  
+        if (code == 13) {   
+            $("#seach_btn").click();//具体处理函数  
+            return false;  
+        }  
+        return true;  
+    }
+
+	function removeMember(event) {
+		var root = $(event).next();
+		var theme = $(root).attr("value");
+		$("#memberInfo").html(theme);
+		$("#memberInfo").attr("theme",theme);
+		$("#removeModal").modal("show");
+	}
+	
+	function deleteActivity(event) {
+		var theme = $("#memberInfo").html();
+		$.ajax({
+			url: "/QHD-Ant/deleteActivity.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			data: {
+				theme: theme
+			},
+			success: function(data) {
+				if(data) {
+					window.location.href = "index.html";
+				}
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
+</script>
+
+
+<script type="text/javascript">
+	$(function(){
+		getAdmin();
+		searchClick();
+		getPartActivityList();
+		//这里的id要填写的是输入框的id
+		document.getElementById('search_main').onkeydown=keyDownSearch;
+	});
+</script>
+</body>
+</html>

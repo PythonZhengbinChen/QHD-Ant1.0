@@ -1,0 +1,48 @@
+@charset 'utf-8';
+
+.member_info {
+	margin-top: 15px;
+	min-height: 400px;
+}
+
+#MyModal,#updateModal ,#updateFile,#backupsModal,#removeModal{
+	background-color: #ccc;
+	width: 30%;
+	height: 450px;
+	margin-top: 5%;
+	border-radius: 8px;
+}
+
+#MyModal label ,#updateModal label,#updateFile label,#backupsModal label,#removeModal label{
+	float: left;
+	text-align: right;
+}
+
+#import {
+	background-color: #ccc;
+	width: 30%;
+	height: 250px;
+	margin-top: 15%;
+	border-radius: 8px;
+}
+
+.control {
+	float: right;
+	margin-left: 15px;
+}
+
+.control-group {
+	margin-top: 15px;
+	overflow: hidden;
+}
+
+#tab_div {
+			padding: 5px;
+			max-width: 330px;
+			line-height: 18px;
+			background-color: #fff;
+			border: 1px solid #7dbb47;
+			border-radius: 5px;
+			display: none;
+			z-index: 10000;
+		}

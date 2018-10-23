@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="csrf-token" content="adXiG5Qo4yrddNsRNK5yRkX8aDBCWjd781w8icK2"/>
+    <link rel="shortcut icon" href="../images/favicon.png" type="image/png">
+
+    <title>秦皇岛小蚂蚁亲子俱乐部</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/search.css" rel="stylesheet">
+	<link href="../css/jPages.css" rel="stylesheet">
+  	<link href="../css/animate.css" rel="stylesheet">
+  	<style>
+  		#removeModal{
+			background-color: #ccc;
+			width: 50%;
+			height: 450px;
+			margin-top: 5%;
+			border-radius: 8px;
+		}
+		
+		#removeModal label{
+			float: left;
+			text-align: right;
+		}
+  	</style>
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a href="index.html" class="navbar-brand logo"><h3><span id="logo_title">秦皇岛</span> 小蚂蚁亲子俱乐部</h3></a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li style="margin-top: 15px;">欢迎: <span id="admin-name" style="color: #337ab7;">admin</span></li>
+				<li class="nav-divider"></li>
+				<li><a href="/QHD-Ant/loginOut.do"><span class="glyphicon glyphicon-remove"></span> 退出</a></li>
+			</ul>	
+		</div>
+	</div>
+</nav>
+
+<div class="container main">
+
+	<div class="container result" style="margin-top: -20px;">
+		<div class="title">
+			<span class="label label-success">活动列表</span>
+		</div>
+
+		<div class="container activity_info" style="margin-top: 20px;">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>序号</th>
+						<th>主题</th>
+						<th>时间</th>
+						<th>地点</th>
+						<th>参与人数/人</th>
+						<th>查看</th>
+						<th>删除</th>
+					</tr>
+				</thead>
+				<tbody id="main_list">
+				<!-- 
+					<tr>
+						<td>1</td>
+						<td>318化石谷</td>
+						<td>2017-03-18</td>
+						<td>秦皇岛化石谷乐园</td>
+						<td>22</td>
+						<td><label class="glyphicon glyphicon-eye-open glyphicon_hover"></label></td>
+					</tr>
+				 -->
+				</tbody>
+			</table>
+			<div class="holder"></div>
+		</div>
+	</div>
+	
+
+
+	<div class="signup-footer">
+        <div class="pull-left">
+                &copy; Copyright © 2017, QHD-Ant All Rights Reserved.
+        </div>
+        <div class="pull-right">
+            <div class="qqlink link" style="color: #fff">QQ群：518078707 | 微信公众号：QHD-Ant</div>
+        </div>
+    </div>
+</div>
+
+
+<div id=removeModal class="modal fade container" style="height: 220px;margin-top: 15%" tabindex="-1" role="dialog" aria-labelledby="removeModalLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h3 id="removeModalLabel"><label  class="glyphicon glyphicon-question-sign"></label> 系统提示</h3>
+	</div>
+	<div class="modal-body" style="overflow: hidden; text-align: center; padding: 30px;">
+		<h3 style="color: #fff;">是否删除主题为:<span id="memberInfo" identity="" style="color:red;"></span>的活动？</h3>
+	</div>
+	<div class="modal-footer">
+		<a href="#" class="btn btn-danger" class="close" data-dismiss="modal" aria-hidden="true">取消</a>
+		<a href="#" id="remove_btn" onclick="deleteActivity()" class="btn btn-primary">确认</a>
+	</div>
+</div>
+
+		
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/jPages.min.js"></script>
+<script src="../js/jpage-main.js"></script>
+<script type="text/javascript" src="../js/getAdmin.js"></script>
+<script type="text/javascript">
+	function getAllActivityList() {
+		$.ajax({
+			url: "/QHD-Ant/getAllActivityList.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			success: function(data) {
+				for(var i=0;i<data.length;i++){
+					var str = "<tr><td>"+(i+1)+"</td><td>"+data[i].theme+"</td><td>"+data[i].time+"</td><td>"+data[i].site+"</td><td>"+data[i].memberCount+"</td><td><label class=\"glyphicon glyphicon-eye-open glyphicon_hover\" onclick= \"gotoEditActivity(this)\"></label></td><td><label class=\"glyphicon glyphicon-remove glyphicon_hover\" onclick= \"removeMember(this)\"></label></td></tr>";
+					$(".activity_info table tbody").append(str);
+					str = "";
+				}
+			}
+		});
+	}
+	
+	function gotoEditActivity(event) {
+		var theme = $(event).parent().parent().children().eq(1).html();
+		$.ajax({
+			url: "/QHD-Ant/gotoEditActivity.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			data: {
+				theme: theme
+			},
+			success: function(data) {
+				if(data) {
+					window.location.href = "edit_activitys.html";
+				}
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
+	
+	function removeMember(event) {
+		var root = $(event).parent().parent();
+		var theme = $(root).children().eq(1).html();
+		
+		$("#memberInfo").html(theme);
+		$("#memberInfo").attr("theme",theme);
+		
+		$("#removeModal").modal("show");
+	}
+	
+	function deleteActivity(event) {
+		var theme = $("#memberInfo").html();
+		$.ajax({
+			url: "/QHD-Ant/deleteActivity.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			data: {
+				theme: theme
+			},
+			success: function(data) {
+				if(data) {
+					window.location.href = "view_activitys.html";
+				}
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
+</script>
+
+
+<script type="text/javascript">
+	$(function(){
+		getAdmin();
+		getAllActivityList();
+		jpage_main();
+	});
+</script>
+</body>
+</html>

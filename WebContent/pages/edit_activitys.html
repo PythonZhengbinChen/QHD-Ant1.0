@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="csrf-token" content="adXiG5Qo4yrddNsRNK5yRkX8aDBCWjd781w8icK2"/>
+    <link rel="shortcut icon" href="../images/favicon.png" type="image/png">
+
+    <title>秦皇岛小蚂蚁亲子俱乐部</title>
+    <link href="../css/bootstrap.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <link href="../css/search.css" rel="stylesheet">
+    <link href="../css/create_activitys.css" rel="stylesheet">
+    <link href="../css/member_info.css" rel="stylesheet">
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top">
+	<div class="container">
+		<div class="navbar-header">
+			<a href="index.html" class="navbar-brand logo"><h3><span id="logo_title">秦皇岛</span> 小蚂蚁亲子俱乐部</h3></a>
+			
+		</div>
+		<div class="collapse navbar-collapse" id="navbar-collapse">
+			<ul class="nav navbar-nav navbar-right">
+				<li style="margin-top: 15px;">欢迎: <span id="admin-name" style="color: #337ab7;">admin</span></li>
+				<li class="nav-divider"></li>
+				<li><a href="/QHD-Ant/loginOut.do"><span class="glyphicon glyphicon-remove"></span> 退出</a></li>
+			</ul>	
+		</div>
+	</div>
+</nav>
+
+<div class="container">
+	
+
+	<div class="container main">
+		<div class="title">
+			<span class="label label-success">活动创建</span>
+		</div>
+
+		<div class="container form_box">
+			<form class="form-horizontal">
+				<div class="control-group form-inline">
+					<label class="control-label" for="theme">主题：</label>
+					<input type="text" id="theme" class="form-control" name="theme" placeholder="请输入时间+活动名">
+				</div>
+				<div class="control-group form-inline">
+					<label class="control-label" for="time">时间：</label>
+					<input type="text" id="time" class="form-control" name="time" placeholder="时间">
+				</div>
+				<div class="control-group form-inline">
+					<label class="control-label" for="site">地点：</label>
+					<input type="text" id="activity_site" class="form-control" name="site" placeholder="地点">
+				</div>
+				<div class="control-group form-inline">
+					<label class="control-label" for="remark">备注：</label>
+					<input type="text" id="remark" class="form-control" name="remark" placeholder="备注">
+				</div>
+				<div class="control-group form-inline" id="add_member"	style="padding-bottom: 10px; border-bottom: 1px dashed #ccc;">
+					<label class="control-label">参与人员：</label>
+					<a href="#SystemModal" id="system_import_btn" role="button" onclick="getMemberList()" class="btn btn-info" data-toggle="modal">系统会员添加</a>
+					<a href="#MyModal"  role="button" class="btn btn-info" data-toggle="modal">手动添加</a>
+				</div>
+
+				<table id="partIn_table" class="table table-hover" style="margin-top: 15px;">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>姓名</th>
+							<th>性别</th>
+							<th>电话</th>
+							<th>身份证号</th>
+							<th>上车地点</th>
+							<th>参加活动</th>
+							<th>删除</th>
+						</tr>
+					</thead>
+					<tbody>
+					<!-- 
+						<tr>
+							<td>2</td>
+							<td>陈正斌</td>
+							<td>男</td>
+							<td>15603317662</td>
+							<td>352230199507131838</td>
+							<td>燕山大学</td>
+							<td><span class="label label-default">318化石谷</span></td>
+							<td><label class="glyphicon glyphicon-remove"></label></td>
+						</tr>
+					 -->	
+					</tbody>
+				</table>
+			</form>
+			<div class="btn_box pull-right">
+				<button class="btn btn-primary" onclick="saveActivityToMySQL()">保存</button>
+				<button class="btn btn-success" onclick="downloadFile()">导出</button>
+			</div>
+		</div>
+	</div>
+
+
+
+	<div class="signup-footer">
+        <div class="pull-left">
+                &copy; Copyright © 2017, QHD-Ant All Rights Reserved.
+        </div>
+        <div class="pull-right">
+            <div class="qqlink link" style="color: #fff">QQ群：518078707 | 微信公众号：QHD-Ant</div>
+        </div>
+    </div>	
+</div>
+
+<div id="MyModal" class="modal fade container" tabindex="-1" role="dialog" aria-labelledby="MyModalLabel" aria-hidden="true" style="height: 400px; margin-top: 8%">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<h3 id="MyModalLabel"><label  class="glyphicon glyphicon-user"></label> 会员信息填写</h3>
+	</div>
+	<div class="modal-body" style="overflow: hidden;">
+		<form class="form-horizontal">
+			<div class="control-group form-inline has-feedback" >
+				<label class="control-label" for="name">姓&nbsp;&nbsp;名: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="name" id="name" placeholder="姓名">
+				</div>
+			</div>
+			<div class="control-group form-inline has-feedback" >
+				<label class="control-label" for="sex">性&nbsp;&nbsp;别: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="sex" id="sex" placeholder="性别">
+				</div>
+			</div>
+			<div class="control-group  form-inline has-feedback">
+				<label class="control-label" for="phone">电&nbsp;&nbsp;话: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="phone" id="phone" placeholder="电话">
+				</div>
+			</div>
+			<div class="control-group form-inline has-feedback">
+				<label class="control-label" for="identity">身份证号: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="identity" id="identity" placeholder="身份证号">
+				</div>
+			</div>
+			<div class="control-group form-inline has-feedback">
+				<label class="control-label" for="site">上车地点: </label>
+				<div class="control">
+					<label  class="glyphicon glyphicon-ok form-control-feedback"></label>
+					<input type="text" class="form-control" name="site" id="site" placeholder="上车地点">
+				</div>
+			</div>
+		</form>
+	</div>
+	<div class="modal-footer">
+		<span id="set_close_btn" class="btn btn-danger" class="close" data-dismiss="modal" aria-hidden="true">关闭</span>
+		<span id="set_btn" class="btn btn-primary">保存</span>
+	</div>
+</div>
+
+<div id="SystemModal" class="modal fade container" tabindex="-1" role="dialog" aria-labelledby="SystemLabel" aria-hidden="true">
+	<div class="modal-header">
+		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">
+			&times;
+		</button>
+		<form class="form-search form-inline">
+			<h3 id="SystemLabel"><label  class="glyphicon glyphicon-user"></label> 活动会员添加 
+			<input type="text" class="input-medium search-query form-control" style="margin-left: 10px;" id="search_main" name="search_main" placeholder="姓名或电话">
+			<button id="seach_btn" type="button" class="btn btn-info">查找</button>
+			<span class="btn btn-info " onclick="getMemberList()">查看所有</span>
+			<span class="btn btn-info " onclick="click_mymold()">手动添加</span>
+			</h3>
+		</form>	
+	</div>
+	<div class="modal-body user_box">
+		<div class="container user_label" style= "overflow: hidden;padding-right: 55px;">
+			<span class="pull-left">参与人员：</span>
+			<!-- 
+			<label class="label label-success add_user" value="352230199507131838">陈正斌</label>
+			 -->
+		</div>
+
+		<div class="table_list">
+			<table class="table table-hover" style="margin-top: 15px;">
+					<thead>
+						<tr>
+							<th>序号</th>
+							<th>姓名</th>
+							<th>性别</th>
+							<th>电话</th>
+							<th>身份证号</th>
+							<th>上车地点</th>
+							<th>加入</th>
+						</tr>
+					</thead>
+					<tbody>
+					<!-- 
+						<tr>
+							<td>1</td>
+							<td>陈正斌</td>
+							<td>15603317662</td>
+							<td>352230199507131838</td>
+							<td>燕山大学</td>
+							<td><label class="glyphicon glyphicon-plus"></label></td>
+						</tr>
+					 -->
+					</tbody>
+				</table>
+		</div>
+
+	</div>
+	<div class="modal-footer ">
+		<span id="setMemberList_close_btn" class="btn btn-danger" class="close" data-dismiss="modal" aria-hidden="true">关闭</span>
+		<span id="saveMemberList_btn" class="btn btn-primary">保存</span>
+	</div>
+</div>
+
+
+<div class="hidden" id="old_theme"></div>
+<div class="hidden" id="hidden_memberList"></div>
+
+<script src="../js/jquery.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+
+<script type="text/javascript">
+	function getAdmin() {
+		$.ajax({
+			url: "/QHD-Ant/getAdmin.do",
+			async: false,
+			type: "GET",
+			success: function(data) {
+				$("#admin-name").html(data.name);
+				if(data.role == 1) {
+					$("#add_member").hide();
+					$("#partIn_table .glyphico_btn").parent().hide();
+					$("#partIn_table thead tr th:last").hide();
+					$(".btn_box .btn-primary").hide();
+					$("#theme").attr("disabled","true");
+					$("#time").attr("disabled","true");
+					$("#activity_site").attr("disabled","true");
+					$("#remark").attr("disabled","true");
+				}
+			}
+		});
+	}
+
+	function getMemberActivity() {
+		$.ajax({
+			url: "/QHD-Ant/getActivityInfo.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			success: function(data) {
+				$("#theme").val("");
+				$("#time").val("");
+				$("#activity_site").val("");
+				$("#remark").val("");
+				
+				$("#theme").val(data.theme);
+				$("#time").val(data.time);
+				$("#activity_site").val(data.site);
+				$("#remark").val(data.remark);
+				
+				$("#old_theme").val(data.theme);
+			}
+		});
+		
+		$.ajax({
+			url: "/QHD-Ant/getActivityMemberInfo.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			success: function(data) {
+				for(var i=0;i<data.length;i++) {
+					var pre_id = $("#partIn_table tbody tr:last td:first").html();
+					var theme = $("#theme").val();
+					if(pre_id == "" || pre_id ==　undefined || pre_id == "NaN"){
+						var id = 1;
+					} else {
+						var id = Number(pre_id)+Number(1);
+					}
+					var str = "<tr class=\""+data[i].identity+"\"><td>"+id+"</td><td>"+data[i].name+"</td><td>"+data[i].sex+"</td><td>"+data[i].phone+"</td><td>"+data[i].identity+"</td><td>"+data[i].site+"</td><td><span class=\"label label-default\">"+theme+"</span></td><td><label class=\"glyphicon glyphicon-remove glyphico_btn\" onclick=\"removeMemberList(this)\"></label></td></tr>";
+					$("#partIn_table tbody").append(str);
+					str = "";
+					var identity_str = "<span class=\""+data[i].identity+"\"></span>";
+					$("#hidden_memberList").append(identity_str);
+					identity_str = "";
+					
+					
+					var label_str = "<label class=\"label label-success add_user pull-left "+data[i].identity+" \" style=\"margin-left: 5px;\" sex=\""+data[i].sex+"\" phone=\""+data[i].phone+"\" identity=\""+data[i].identity+"\" site=\""+data[i].site+"\">"+data[i].name+"</label>";
+					$(".user_label").append(label_str);
+				}
+			}
+		});
+	}
+
+	function getMemberList() {
+		$.ajax({
+			url: "/QHD-Ant/getMemberList.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			success: function(data) {
+				$(".table_list table tbody").html("");
+				for(var i=0;i<data.length;i++){
+					if($("label").hasClass(data[i].identity)){
+						var str = "<tr><td>"+(i+1)+"</td><td>"+data[i].name+"</td><td>"+data[i].sex+"</td><td>"+data[i].phone+"</td><td>"+data[i].identity+"</td><td>"+data[i].site+"</td><td><label class=\"glyphicon glyphicon-minus glyphico_btn\" onclick=\"setLabel(this)\"></label></td></tr>";
+					}else {
+						var str = "<tr><td>"+(i+1)+"</td><td>"+data[i].name+"</td><td>"+data[i].sex+"</td><td>"+data[i].phone+"</td><td>"+data[i].identity+"</td><td>"+data[i].site+"</td><td><label class=\"glyphicon glyphicon-plus glyphico_btn\" onclick=\"setLabel(this)\"></label></td></tr>";
+					}
+					//var str = "<tr class = \""+data[i].identity+"\"><td>"+(i+1)+"</td><td>"+data[i].name+"</td><td>"+data[i].phone+"</td><td>"+data[i].identity+"</td><td>"+data[i].site+"</td><td><label class=\"glyphicon glyphicon-plus glyphico_btn\" onclick=\"setLabel(this)\"></label></td></tr>";
+					$(".table_list table tbody").append(str);
+					str = "";
+				}
+			}
+		});
+	}
+	
+	function removePrevMember() {
+		$("#system_import_btn").click(function() {
+			 $(".user_label label").remove();
+		});
+	}
+	
+	function searchMember() {
+		$("#seach_btn").click(function() {
+			var search_main = $("#search_main").val();
+			if(search_main == "") {
+				alert("请输入查询得内容！");
+				return;
+			}
+			$.ajax({
+				url: "/QHD-Ant/searchMember.do",
+				async: false,
+				type: "get",
+				data: {
+					search_main: search_main
+				},
+				dataType: "json",
+				success: function(data) {
+					$(".table_list table tbody").html("");
+					for(var i=0;i<data.length;i++){
+						if($("label").hasClass(data[i].identity)){
+							var str = "<tr><td>"+(i+1)+"</td><td>"+data[i].name+"</td><td>"+data[i].sex+"</td><td>"+data[i].phone+"</td><td>"+data[i].identity+"</td><td>"+data[i].site+"</td><td><label class=\"glyphicon glyphicon-minus glyphico_btn\" onclick=\"setLabel(this)\"></label></td></tr>";
+						}else {
+							var str = "<tr><td>"+(i+1)+"</td><td>"+data[i].name+"</td><td>"+data[i].sex+"</td><td>"+data[i].phone+"</td><td>"+data[i].identity+"</td><td>"+data[i].site+"</td><td><label class=\"glyphicon glyphicon-plus glyphico_btn\" onclick=\"setLabel(this)\"></label></td></tr>";
+						}
+						$(".table_list table tbody").append(str);
+						str = "";
+					}
+				}
+			});
+		});
+	}
+	
+	function setMember() {
+		$("#set_btn").click(function() {
+			var name = $("#name").val();
+			var sex = $("#sex").val();
+			var phone = $("#phone").val();
+			var identity = $("#identity").val();
+			var site =  $("#site").val();
+			var activitys = "";
+			
+			if(name == "") {
+				$("#name").prev().removeClass("glyphicon-ok");
+				$("#name").prev().addClass("glyphicon-remove");
+				alert("姓名输入有误！");
+				return;
+			}else {
+				$("#name").prev().removeClass("glyphicon-remove");
+				$("#name").prev().addClass("glyphicon-ok");
+			}
+			if(phone == "" || phone.length != 11) {
+				$("#phone").prev().removeClass("glyphicon-ok");
+				$("#phone").prev().addClass("glyphicon-remove");
+				alert("电话号码输入有误！");
+				return;
+			}else {
+				$("#phone").prev().removeClass("glyphicon-remove");
+				$("#phone").prev().addClass("glyphicon-ok");
+			}
+			if(identity == "" || identity.length != 18) {
+				$("#identity").prev().removeClass("glyphicon-ok");
+				$("#identity").prev().addClass("glyphicon-remove");
+				alert("身份证号输入有误！");
+				return;
+			}else {
+				$("#identity").prev().removeClass("glyphicon-remove");
+				$("#identity").prev().addClass("glyphicon-ok");
+			}
+			$.ajax({
+				url: "/QHD-Ant/isMember.do",
+				async: false,
+				type: "get",
+				data: {
+					identity: identity
+				},
+				dataType: "json",
+				success: function(data) {
+					if(data) {
+						/*
+						if($("#partIn_table tbody tr").hasClass(identity)) {
+							alert("会员已经添加，不可重复添加！");
+							return;
+						}
+						var pre_id = $("#partIn_table tbody tr:last td:first").html();
+						var theme = $("#theme").val();
+						if(pre_id == "" || pre_id ==　undefined || pre_id == "NaN"){
+							var id = 1;
+						} else {
+							var id = Number(pre_id)+Number(1);
+						}
+						var str = "<tr class=\""+identity+"\"><td>"+id+"</td><td>"+name+"</td><td>"+sex+"</td><td>"+phone+"</td><td>"+identity+"</td><td>"+site+"</td><td><span class=\"label label-default\">"+theme+"</span></td><td><label class=\"glyphicon glyphicon-remove glyphico_btn\" onclick=\"removeMemberList(this)\"></label></td></tr>";
+						$("#partIn_table tbody").append(str);
+						
+						var label_str = "<label class=\"label label-success add_user pull-left "+identity+" \" style=\"margin-left: 5px;\" sex=\""+sex+"\" phone=\""+phone+"\" identity=\""+identity+"\" site=\""+site+"\">"+name+"</label>";
+						$(".user_label").append(label_str);
+						str = "";
+						*/
+						alert("会员"+identity+"已经添加，不可重复添加！");
+						return ;
+					} else {
+						$.ajax({
+							url: "/QHD-Ant/setMemberInfo.do",
+							async: false,
+							type: "get",
+							data: {
+								name: name,
+								sex: sex,
+								phone: phone,
+								identity: identity,
+								site: site,
+								activitys: activitys
+							},
+							dataType: "json",
+							success: function() {
+								var pre_id = $("#partIn_table tbody tr:last td:first").html();
+								var theme = $("#theme").val();
+								if(pre_id == "" || pre_id ==　undefined || pre_id == "NaN"){
+									var id = 1;
+								} else {
+									var id = Number(pre_id)+Number(1);
+								}
+								var str = "<tr class=\""+identity+"\"><td>"+id+"</td><td>"+name+"</td><td>"+sex+"</td><td>"+phone+"</td><td>"+identity+"</td><td>"+site+"</td><td><span class=\"label label-default\">"+theme+"</span></td><td><label class=\"glyphicon glyphicon-remove glyphico_btn\" onclick=\"removeMemberList(this)\"></label></td></tr>";
+								$("#partIn_table tbody").append(str);
+								
+								var label_str = "<label class=\"label label-success add_user pull-left "+identity+" \" style=\"margin-left: 5px;\" sex=\""+sex+"\" phone=\""+phone+"\" identity=\""+identity+"\" site=\""+site+"\">"+name+"</label>";
+								$(".user_label").append(label_str);
+								str = "";
+								
+							},
+							error: function() {
+								var pre_id = $("#partIn_table tbody tr:last td:first").html();
+								var theme = $("#theme").val();
+								if(pre_id == "" || pre_id ==　undefined || pre_id == "NaN"){
+									var id = 1;
+								} else {
+									var id = Number(pre_id)+Number(1);
+								}
+								var str = "<tr  class=\""+identity+"\"><td>"+id+"</td><td>"+name+"</td><td>"+sex+"</td><td>"+phone+"</td><td>"+identity+"</td><td>"+site+"</td><td><span class=\"label label-default\">"+theme+"</span></td><td><label class=\"glyphicon glyphicon-remove glyphico_btn\" onclick=\"removeMemberList(this)\"></label></td></tr>";
+								$("#partIn_table tbody").append(str);
+								
+								var label_str = "<label class=\"label label-success add_user pull-left "+identity+" \" style=\"margin-left: 5px;\" sex=\""+sex+"\" phone=\""+phone+"\" identity=\""+identity+"\" site=\""+site+"\">"+name+"</label>";
+								$(".user_label").append(label_str);
+								str = "";
+							}
+						});
+					}
+				}
+			});
+			
+			$("#set_close_btn").click();
+			$("#name").val("");
+			$("#sex").val("");
+			$("#phone").val("");
+			$("#identity").val("");
+			$("#site").val("");
+		});
+	}
+	
+	function setLabel(event) {
+		if($(event).hasClass("glyphicon-plus")) {
+			var root = $(event).parent().parent();
+			var name = $(root).children().eq(1).html();
+			var sex = $(root).children().eq(2).html();
+			var phone = $(root).children().eq(3).html();
+			var identity = $(root).children().eq(4).html();
+			var site = $(root).children().eq(5).html();
+			
+			var str = "<label class=\"label label-success add_user pull-left "+identity+" \" style=\"margin-left: 5px;\" sex=\""+sex+"\" phone=\""+phone+"\" identity=\""+identity+"\" site=\""+site+"\">"+name+"</label>";
+			$(".user_label").append(str);
+			$(event).removeClass("glyphicon-plus");
+			$(event).addClass("glyphicon-minus");
+		} else {
+			var root = $(event).parent().parent();
+			var identity = $(root).children().eq(4).html();
+			$("label").remove("." + identity);
+			$(event).removeClass("glyphicon-minus");
+			$(event).addClass("glyphicon-plus");
+		}
+		
+	}
+	
+	function setMemberToList() {
+		$("#saveMemberList_btn").click(function() {
+			var list_num = $(".user_label label").length;
+			for(var i=0;i<list_num;i++) {
+				var name = $(".user_label label").eq(i).html();
+				var sex = $(".user_label label").eq(i).attr("sex");
+				var identity = $(".user_label label").eq(i).attr("identity");
+				var phone = $(".user_label label").eq(i).attr("phone");
+				var site = $(".user_label label").eq(i).attr("site");
+				var pre_id = $("#partIn_table tbody tr:last td:first").html();
+				var theme = $("#theme").val();
+				if($("#partIn_table tbody tr").hasClass(identity)) {
+					continue;
+				}
+				if(pre_id == "" || pre_id ==　undefined || pre_id == "NaN"){
+					var id = 1;
+				} else {
+					var id = Number(pre_id)+Number(1);
+				}
+				var str = "<tr class=\""+identity+"\"><td>"+id+"</td><td>"+name+"</td><td>"+sex+"</td><td>"+phone+"</td><td>"+identity+"</td><td>"+site+"</td><td><span class=\"label label-default\">"+theme+"</span></td><td><label class=\"glyphicon glyphicon-remove glyphico_btn\" onclick=\"removeMemberList(this)\"></label></td></tr>";
+				$("#partIn_table tbody").append(str);
+				str = "";
+			}
+			//$("#setMemberList_close_btn").click();
+		});
+	}
+	
+	function removeMemberList(event) {
+		$(event).parent().parent().remove();
+		var list_num = $("#partIn_table tbody tr").length;
+		for(var i=0; i<list_num;i++) {
+			$("#partIn_table tbody tr").eq(i).children().eq(0).html(Number(i)+1);
+		}
+		
+		var root = $(event).parent().parent();
+		var identity = $(root).children().eq(4).html();
+		$("label").remove("." + identity);
+		$("tr."+identity+" label").removeClass("glyphicon-minus");
+		$("tr."+identity+" label").addClass("glyphicon-plus");
+	}
+	
+	function saveActivityToMySQL() {
+		var theme = $("#theme").val();
+		var time = $("#time").val();
+		var activity_site = $("#activity_site").val();
+		var remark = $("#remark").val();
+		
+		var old_theme = $("#old_theme").val();
+		
+		if(theme == "") {
+			alert("活动主题不能为空！");
+			return;
+		}
+		if(time == "") {
+			alert("活动时间不能为空！");
+			return;
+		}
+		if(activity_site == "") {
+			alert("活动地点不能为空！");
+			return;
+		}
+		
+		
+		if(theme != old_theme) {
+			var flag = 0;
+			$.ajax({
+				url: "/QHD-Ant/isActivity.do",
+				async: false,
+				type: "post",
+				data: {
+					theme: theme
+				},
+				dataType: "json",
+				success: function(data) {
+					if(data) {
+						alert("该活动主题已经存在，请重新填写！");
+						flag = 1;
+						return ;
+					}
+				},
+				error: function(e) {
+					console.log(e);
+				}
+			});
+			
+			if(flag == 1) {
+				return ;
+			}
+		}
+		
+		var list_num = $("#partIn_table tbody tr").length;
+		var setMemberList = new Array();
+		//分析出是否需要更新或者添加的活动用户列表
+		for(var i=0; i<list_num;i++) {
+			var name = $("#partIn_table tbody tr").eq(i).children().eq(1).html();
+			var sex = $("#partIn_table tbody tr").eq(i).children().eq(2).html();
+			var phone = $("#partIn_table tbody tr").eq(i).children().eq(3).html();
+			var identity = $("#partIn_table tbody tr").eq(i).children().eq(4).html();
+			var site = $("#partIn_table tbody tr").eq(i).children().eq(5).html();
+			var join_activity = theme;
+			var year = identity.substring(6, 10);
+			var month = identity.substring(10, 14);
+			
+			
+			
+			var setMember = {
+				theme: theme,
+				identity: identity
+			};
+			setMemberList.push(setMember);
+			
+		}
+		
+		$.ajax({
+			url: "/QHD-Ant/updateActivityAndMember.do",
+			async: false,
+			type: "get",
+			data: {
+				theme: theme,
+				time: time,
+				activity_site: activity_site,
+				remark: remark,
+				old_theme: old_theme
+			},
+			dataType: "json",
+			success: function(data) {
+				console.log("success inset into " + data);
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+		
+		/**
+		*  修改活动信息表保存的思路：
+		*  先将之前对应的活动列表全部删除，根据之前的旧的主题，然后将新的用户信息在保存进去。
+		**/
+		$.ajax({
+			url: "/QHD-Ant/deleteAttendActivity.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			data: {
+				theme: old_theme
+			},
+			success: function(data) {
+				console.log("删除活动成员的列表");
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+		
+		$.ajax({
+			url: "/QHD-Ant/saveAttendActivity.do",
+			async: false,
+			type: "get",
+			data: {
+				memberList: JSON.stringify(setMemberList)
+			},
+			dataType: "html",
+			contentType: "application/json; charset=utf-8",
+			success: function(data) {
+				console.log(data);
+				if(data) {
+				}
+			}
+		});
+		
+		alert("更新成功！");
+		
+		$.ajax({
+			url: "/QHD-Ant/gotoEditActivity.do",
+			async: false,
+			type: "post",
+			dataType: "json",
+			data: {
+				theme: theme
+			},
+			success: function(data) {
+				if(data) {
+					window.location.href = "edit_activitys.html";
+				}
+			},
+			error: function(e) {
+				console.log(e);
+			}
+		});
+	}
+	
+	function downloadFile() {
+		var theme = $("#theme").val();
+		window.location.href = "/QHD-Ant/downloadActivityFile.do?theme="+theme;
+	}
+	
+	function click_mymold() {
+		$("#SystemModal").modal("hide");
+		$("#MyModal").modal("show");
+	}
+	
+	function keyDownSearch(e) {  
+        // 兼容FF和IE和Opera  
+        var theEvent = e || window.event;  
+        var code = theEvent.keyCode || theEvent.which || theEvent.charCode;  
+        if (code == 13) {   
+            $("#seach_btn").click();//具体处理函数  
+            return false;  
+        }  
+        return true;  
+    }
+</script>
+
+<script type="text/javascript">
+	$(function(){
+		getMemberActivity();
+		getAdmin();
+		searchMember();
+		setMember();
+		setMemberToList();
+		//这里的id要填写的是输入框的id
+		document.getElementById('search_main').onkeydown=keyDownSearch;
+	});
+</script>
+</body>
+</html>
